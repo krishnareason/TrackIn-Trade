@@ -43,7 +43,7 @@ Please answer with:
             },
             body: JSON.stringify({
                 model: "openai/gpt-4o",
-                max_tokens: 1024,
+                max_tokens: 400,
                 messages: [
                     {
                         role: "system",
