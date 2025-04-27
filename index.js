@@ -66,6 +66,17 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get("/register", (req,res)=>{
+    let { name } = req.query;
+    res.send(name);
+    // res.session.name = name;
+    // res.redirect("/hello");
+});
+
+app.get("/hello",(req,res) =>{
+    res.send(`hello, ${req.session.name}`);
+});
+
 // Routes
 app.get("/", (req, res) => res.redirect("/home"));
 app.get("/home", (req, res) => res.render("frontpage.ejs"));

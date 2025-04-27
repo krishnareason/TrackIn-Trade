@@ -7,7 +7,7 @@ const {isLoggedIn} = require('../middleware.js');
 
 
 // GET /users/:user_id/notes
-router.get('/',isLoggedIn, async (req, res) => {
+router.get('/',isLoggedIn, wrapAsync(async (req, res) => {
     const userId = req.params.user_id;
 
     // Get user info from Ogusers
@@ -25,10 +25,10 @@ router.get('/',isLoggedIn, async (req, res) => {
     );
 
     res.render("userTradenote.ejs", { notes, users, userId });
-});
+}));
 
 // POST /users/:user_id/notes/add
-router.post('/add',isLoggedIn, async (req, res) => {
+router.post('/add',isLoggedIn, wrapAsync(async (req, res) => {
     const { title, content } = req.body;
     const userId = req.params.user_id;
 
@@ -46,10 +46,10 @@ router.post('/add',isLoggedIn, async (req, res) => {
     );
 
     res.redirect(`/users/${userId}/notes`);
-});
+}));
 
 // POST /users/:user_id/notes/delete/:id
-router.post('/delete/:id',isLoggedIn, async (req, res) => {
+router.post('/delete/:id',isLoggedIn, wrapAsync(async (req, res) => {
     const noteId = req.params.id;
     const userId = req.params.user_id;
 
@@ -65,6 +65,6 @@ router.post('/delete/:id',isLoggedIn, async (req, res) => {
     );
 
     res.redirect(`/users/${userId}/notes`);
-});
+}));
 
 module.exports = router;

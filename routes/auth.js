@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const User = require("../models/userModel");
+const wrapAsync = require('../utils/wrapAsync');
+const ExpressError = require('../utils/ExpressError');
 
 // Middleware to protect routes
 const isLoggedIn = (req, res, next) => {
@@ -15,16 +17,17 @@ router.get("/signup", (req, res) => {
 });
 
 // Signup Logic
-router.post("/signup", async (req, res) => {
+router.post("/signup", wrapAsync(async (req, res) => {
   const { uName, uEmail, uPass } = req.body;
   try {
     await User.createUser(uName, uEmail, uPass);
+    req.flash("success","Account is Created, Please login");
     res.redirect("/login");
   } catch (err) {
-    res.send("Error creating user: " + err.message);
+    req.flash("error", "Error creating user ");
     res.redirect("/signup");
   }
-});
+}));
 
 // Login Form
 router.get("/login", (req, res) => {
