@@ -10,10 +10,12 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const db = require('./db');
 const bcrypt = require("bcryptjs");
 const ExpressError = require("./utils/ExpressError.js");
 const middleware = require('./middleware');
+const User = require("./models/userModel.js");
 
 // Route files
 const userRoutes = require('./routes/users');
@@ -56,6 +58,10 @@ app.use(flash());
 // Passport Setup
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 app.use(middleware.setCurrentUser);
 
 // Flash & user data middleware
