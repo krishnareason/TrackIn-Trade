@@ -26,34 +26,26 @@
     </div>
 
     <h3 class="fw-bold text-white">All Notes!!</h3>
-    <!-- Notes Display -->
-    <% 
-      const colors = ['primary', 'success', 'danger', 'warning', 'info', 'secondary'];
-      function getRandomColor() {
-        return colors[Math.floor(Math.random() * colors.length)];
-      }
-    %>
 
+    <!-- Notes Display -->
     <div class="row">
-      <% notes.forEach(note => { 
-        const color = getRandomColor();
-      %>
-      <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card h-100 shadow-sm">
-          <div class="card-header text-white bg-<%= color %>">
-            <h5 class="mb-0"><%= note.title %></h5>
-          </div>
-          <div class="card-body">
-            <p><%= note.content %></p>
-          </div>
-          <div class="card-footer bg-light d-flex justify-content-end">
-            <form action="/users/<%= userId %>/notes/delete/<%= note.noteId %>" method="POST">
-              <button class="btn btn-outline-danger btn-sm">Delete</button>
-            </form>
+      <% notes.forEach(note => { %>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-header text-white bg-secondary">
+              <h5 class="mb-0"><%= note.title %></h5>
+            </div>
+            <div class="card-body">
+              <p><%= note.content %></p>
+            </div>
+            <div class="card-footer bg-light d-flex justify-content-end">
+              <form action="/users/<%= userId %>/notes/delete/<%= note.noteId %>" method="POST">
+                <button class="btn btn-outline-danger btn-sm">Delete</button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    <% }) %>
+      <% }) %>
     </div>
 
   </div>
