@@ -72,7 +72,7 @@ app.use((req, res, next) => {
 // Routes
 app.get("/", (req, res) => res.redirect("/home"));
 app.get("/home", (req, res) => res.render("frontpage.ejs"));
-app.get("/documentation", (req, res) => res.render("documentation.ejs"));
+app.get("/docs", (req, res) => res.render("docs.ejs"));
 // app.get("/aiInsights", (req, res) => res.redirect("aiInsights.ejs"));
 
 
