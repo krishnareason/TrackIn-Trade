@@ -45,9 +45,9 @@ app.use(express.static(path.join(__dirname, "/public")));
 const sessionOptions = {
     secret: "mysupersecretcode",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+       // expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true
     }
@@ -72,7 +72,7 @@ app.use((req, res, next) => {
 // Routes
 app.get("/", (req, res) => res.redirect("/home"));
 app.get("/home", (req, res) => res.render("frontpage.ejs"));
-app.get("/documentation", (req, res) => res.render("documentation.ejs"));
+app.get("/docs", (req, res) => res.render("docs.ejs"));
 // app.get("/aiInsights", (req, res) => res.redirect("aiInsights.ejs"));
 
 

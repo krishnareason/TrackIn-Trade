@@ -24,7 +24,7 @@ router.get('/',isLoggedIn, wrapAsync(async (req, res) => {
         [userId]
     );
 
-    res.render("userTradenote.ejs", { notes, users, userId });
+    res.render("note.ejs", { notes, users, userId });
 }));
 
 // POST /users/:user_id/notes/add
