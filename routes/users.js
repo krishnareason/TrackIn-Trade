@@ -6,7 +6,7 @@ const ExpressError = require('../utils/ExpressError');
 const {isLoggedIn} = require('../middleware.js');
 
 // GET all users
-router.get('/',isLoggedIn, wrapAsync(async (req, res) => {
+router.get('/', wrapAsync(async (req, res) => {
     const [users] = await db.query('SELECT * FROM Ogusers');
     res.json(users);
 }));
@@ -29,9 +29,9 @@ router.get('/:id', isLoggedIn, wrapAsync(async (req, res) => {
     // Step 3: Calculate total P&L, profit count, and loss count
     const [[stats]] = await db.query(`
         SELECT 
-          IFNULL(SUM(pro_los) * -1, 0) AS totalPL,
-          COUNT(CASE WHEN pro_los > 0 THEN 1 END) AS lTrade,
-          COUNT(CASE WHEN pro_los < 0 THEN 1 END) AS pTrade
+          IFNULL(SUM(pro_los) , 0) AS totalPL,
+          COUNT(CASE WHEN pro_los > 0 THEN 1 END) AS pTrade,
+          COUNT(CASE WHEN pro_los < 0 THEN 1 END) AS lTrade
         FROM trades
         WHERE user_id = ?
       `, [userId]);

@@ -1,50 +1,49 @@
 <% layout('layouts/boilerplate_dash') -%>
 
-  <body style="min-height: 400px; width: 100%; background-color: #1E1F22;">
-    <br /><br />
-    <div class="container mt-5 " style="height: 500px; width: 100%; padding-top: 80px; padding-bottom: 80px;">
-      <div class="text-center mb-5 text-white">
-        <h2 class="mb-2">Welcome, <%= user.uName %> 👋</h2>
-        <p class="text-white">Here's a quick look at your portfolio</p>
-      </div>
+<body style="background-color: #1E1F22; min-height: 100vh;">
+  <div class="container py-5">
+    <!-- Welcome Message -->
+    <div class="text-center text-white mb-5">
+      <h1 class="fw-bold">Welcome, <%= user.uName %> 👋</h1>
+      <p class="text">Here’s a quick summary of your portfolio</p>
+    </div>
 
-      <div class="row justify-content-center mb-4">
-        <div class="col-md-6">
-          <div class="card shadow-sm rounded-4">
-            <div class="card-body">
-              <h5 class="card-title text-center mb-4">📊 Portfolio Summary</h5>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between">
-                  <strong>Total P&L:</strong> <span>
-                    <%= user.totalPL %>
-                  </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <strong>Total Profitable Trades:</strong> <span>
-                    <%= user.pTrade %>
-                  </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                  <strong>Total Losing Trades:</strong> <span>
-                    <%= user.lTrade %>
-                  </span>
-                </li>
-              </ul>
-            </div>
+    <!-- Portfolio Summary Card -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg rounded-4 border-0">
+          <div class="card-body p-4">
+            <h4 class="card-title text-center mb-4">📊 Portfolio Summary</h4>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <strong>Total P&L:</strong> <span><%= user.totalPL %></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <strong>Profitable Trades:</strong> <span><%= user.pTrade %></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <strong>Losing Trades:</strong> <span><%= user.lTrade %></span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="text-center">
-        <h5 class="mb-3" style="color: white;">🔍 Quick Actions</h5>
-        <div class="d-flex flex-column flex-md-row justify-content-center gap-3" style="padding-bottom: 150px;">
-          <a href="/users/<%= user.uId %>/trades" class="btn btn-primary px-4" style="color: black;">Go to Journal</a>
-          <a href="/users/<%= user.uId %>/ai/insights" class="btn btn-secondary px-4" style="color: black;">💡 Get AI
-            Insights</a>
-          <a href="/users/<%= user.uId %>/notes" class="btn btn-success px-4" style="color: black;">Go to Notes</a>
-        </div>
+    <!-- Quick Actions -->
+    <div class="text-center">
+      <h4 class="text-white mb-4">🔍 Quick Actions</h4>
+      <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+        <a href="/users/<%= user.uId %>/trades" class="btn btn-outline-light px-4 py-2">
+          📘 Go to Journal
+        </a>
+        <a href="/users/<%= user.uId %>/ai/insights" class="btn btn-outline-info px-4 py-2">
+          💡 AI Insights
+        </a>
+        <a href="/users/<%= user.uId %>/notes" class="btn btn-outline-success px-4 py-2">
+          📝 Go to Notes
+        </a>
       </div>
     </div>
-    <br />
-  </body>
-  <br /><br />
+  </div>
+</body>

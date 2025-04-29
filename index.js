@@ -10,12 +10,12 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
-const LocalStrategy = require("passport-local");
+const LocalStrategy = require("passport-local").Strategy;
 const db = require('./db');
 const bcrypt = require("bcryptjs");
 const ExpressError = require("./utils/ExpressError.js");
 const middleware = require('./middleware');
-const User = require("./models/userModel.js");
+//const User = require("./models/userModel.js");
 
 // Route files
 const userRoutes = require('./routes/users');
@@ -58,10 +58,7 @@ app.use(flash());
 // Passport Setup
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 app.use(middleware.setCurrentUser);
 
 // Flash & user data middleware
@@ -70,17 +67,6 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     res.locals.currentUser = req.user || null;
     next();
-});
-
-app.get("/register", (req,res)=>{
-    let { name } = req.query;
-    res.send(name);
-    // res.session.name = name;
-    // res.redirect("/hello");
-});
-
-app.get("/hello",(req,res) =>{
-    res.send(`hello, ${req.session.name}`);
 });
 
 // Routes
