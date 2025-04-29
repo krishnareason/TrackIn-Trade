@@ -1,6 +1,8 @@
 <% layout('layouts/boilerplate_dash') -%>
 
-<body style="background-color: #1E1F22; min-height: 100vh;">
+<body style="background: url('/css/imgs/BBACK.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh;">
+
+  <br><br><br><br><br><br>
   <div class="container py-5">
     <!-- Welcome Message -->
     <div class="text-center text-white mb-5">
@@ -37,13 +39,14 @@
         <a href="/users/<%= user.uId %>/trades" class="btn btn-outline-light px-4 py-2">
           📘 Go to Journal
         </a>
-        <a href="/users/<%= user.uId %>/ai/insights" class="btn btn-outline-info px-4 py-2">
+        <a href="/users/<%= user.uId %>/ai/insights" class="btn btn-outline-light px-4 py-2">
           💡 AI Insights
         </a>
-        <a href="/users/<%= user.uId %>/notes" class="btn btn-outline-success px-4 py-2">
+        <a href="/users/<%= user.uId %>/notes" class="btn btn-outline-light px-4 py-2">
           📝 Go to Notes
         </a>
       </div>
     </div>
+    <br><br><br><br><br>
   </div>
 </body>
