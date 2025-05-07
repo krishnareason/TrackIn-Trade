@@ -1,0 +1,147 @@
+<% layout('layouts/boilerplate_Jh') -%>
+<body style="background: url('/css/imgs/BBACK.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; padding-top: 3rem;">
+  <div class="container mt-5 pt-5">
+    <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+      <h3 class="text-center mb-4">📈 Add a New Trade</h3>
+      <form method="POST" action="/users/<%= user.uId %>/trades" novalidate class="needs-validation">
+
+        <!-- Row 1: User ID + Date -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="user_id" class="form-label">User ID</label>
+            <input type="number" id="user_id" name="user_id" class="form-control" value="<%= user.uId %>" readonly>
+          </div>
+          <div class="col-md-6">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" id="date" name="date" class="form-control" required>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Choose a valid Date!</div>
+          </div>
+        </div>
+
+        <!-- Row 2: Stock + Quantity + Direction -->
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="text" id="stock" name="stock" class="form-control" maxlength="75" required>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Stock Name!</div>
+          </div>
+          <div class="col-md-4">
+            <label for="qty" class="form-label">Quantity</label>
+            <input type="number" id="qty" name="qty" class="form-control" required oninput="calculateProfitLoss()">
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Stock quantity!</div>
+          </div>
+          <div class="col-md-4">
+            <label for="direction" class="form-label">Direction</label>
+            <select id="direction" name="direction" class="form-select" required>
+              <option value="Buy">Buy</option>
+              <option value="Sell">Sell</option>
+            </select>
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+        </div>
+
+        <!-- Row 3: Entry/Exit Time -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="enTime" class="form-label">Entry Time</label>
+            <input type="time" id="enTime" name="enTime" class="form-control" step="1" required>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Time!</div>
+          </div>
+          <div class="col-md-6">
+            <label for="exTime" class="form-label">Exit Time</label>
+            <input type="time" id="exTime" name="exTime" class="form-control" step="1" required>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Time!</div>
+          </div>
+        </div>
+
+        <!-- Row 4: Entry/Exit Price + P&L -->
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="enPrice" class="form-label">Entry Price</label>
+            <input type="number" id="enPrice" name="enPrice" class="form-control" required oninput="calculateProfitLoss()">
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Price!</div>
+          </div>
+          <div class="col-md-4">
+            <label for="exPrice" class="form-label">Exit Price</label>
+            <input type="number" id="exPrice" name="exPrice" class="form-control" required oninput="calculateProfitLoss()">
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Price!</div>
+          </div>
+          <div class="col-md-4">
+            <label for="pro_los" class="form-label">Profit/Loss</label>
+            <input type="number" id="pro_los" name="pro_los" class="form-control" readonly>
+            <div class="valid-feedback">Looks good!</div>
+    
+          </div>
+        </div>
+
+        <!-- Row 5: Stoploss + Target -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="stoploss" class="form-label">Stoploss</label>
+            <input type="number" id="stoploss" name="stoploss" class="form-control" required>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Price!</div>
+          </div>
+          <div class="col-md-6">
+            <label for="target" class="form-label">Target</label>
+            <input type="number" id="target" name="target" class="form-control" required>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter a valid Price!</div>
+          </div>
+        </div>
+
+        <!-- Textareas: Reasons, Conditions, Mistakes -->
+        <div class="mb-3">
+          <label for="enReason" class="form-label">Reason for Entry</label>
+          <textarea id="enReason" name="enReason" class="form-control" maxlength="200" rows="2" required></textarea>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Enter valid Reasons!</div>
+        </div>
+        <div class="mb-3">
+          <label for="exReason" class="form-label">Reason for Exit</label>
+          <textarea id="exReason" name="exReason" class="form-control" maxlength="200" rows="2" required></textarea>
+          <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter valid Reasons!</div>
+        </div>
+        <div class="mb-3">
+          <label for="market" class="form-label">Market Conditions</label>
+          <textarea id="market" name="market" class="form-control" maxlength="200" rows="2" required></textarea>
+          <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Enter valid Reasons!</div>
+        </div>
+        <div class="mb-3">
+          <label for="mistake" class="form-label">Mistakes</label>
+          <textarea id="mistake" name="mistake" class="form-control" maxlength="200" rows="2" required></textarea>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-4">
+          <label for="finalview" class="form-label">Final View</label>
+          <textarea id="finalview" name="finalview" class="form-control" maxlength="250" rows="3" required></textarea>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-success px-4">✅ Submit Trade</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS: P&L Calculation -->
+  <script>
+    function calculateProfitLoss() {
+      let entryPrice = parseFloat(document.getElementById('enPrice').value) || 0;
+      let exitPrice = parseFloat(document.getElementById('exPrice').value) || 0;
+      let quantity = parseFloat(document.getElementById('qty').value) || 0;
+      document.getElementById('pro_los').value = (exitPrice-entryPrice) * quantity;
+    }
+  </script>
+</body>

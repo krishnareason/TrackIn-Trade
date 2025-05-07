@@ -1,0 +1,85 @@
+.navbar{
+    height : 5rem;
+}
+
+.fa-solid{
+    color: green;
+    font-size: 2rem;;
+}
+
+.nav-link{
+    color: black !important;
+}
+
+.f-info-links a{
+    text-decoration: none;
+    color:  #e8e0e0;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.f-info-socials i {
+    font-size: 1.6rem;
+    margin-right: 1rem;
+}
+
+.f-info{
+    text-align: center !important;
+    height: 8rem;
+    background-color: #201e1e;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+
+.container-fluid{
+    text-align: center;
+    justify-content: center;
+}
+
+.navbar.bg-dark {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+/* Make the whole page take up the full viewport height */
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+  
+  /* Main wrapper to handle layout */
+  .wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Your main content area grows to take up remaining space */
+  .content {
+    flex: 1;
+  }
+  
+  /* Optional: footer styling */
+  footer {
+    background-color:#201e1e;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #e8e0e0;
+  }
+  

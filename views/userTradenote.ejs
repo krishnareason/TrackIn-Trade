@@ -1,0 +1,62 @@
+<% layout('layouts/boilerplate_Jh') -%>
+<body style="background: url('/css/imgs/BBACK.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; padding-top: 3rem;">
+  <br><br><br><br>
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold text-white"><%= users.uName %>'s Notes</h2>
+    </div>
+
+    <!-- Note Add Form -->
+    <div class="card mb-4 shadow-sm ">
+      <div class="card-header bg-primary text-white">
+        Add a New Note
+      </div>
+      <div class="card-body">
+        <form action="/users/<%= userId %>/notes/add" method="POST">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" class="form-control" placeholder="Enter note title" required>
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea name="content" class="form-control" rows="3" placeholder="Write your note here..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-success">Add Note</button>
+        </form>
+      </div>
+    </div>
+
+    <h3 class="fw-bold text-white">All Notes!!</h3>
+    <!-- Notes Display -->
+    <% 
+      const colors = ['primary', 'success', 'danger', 'warning', 'info', 'secondary'];
+      function getRandomColor() {
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+    %>
+
+    <div class="row">
+      <% notes.forEach(note => { 
+        const color = getRandomColor();
+      %>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-header text-white bg-<%= color %>">
+            <h5 class="mb-0"><%= note.title %></h5>
+          </div>
+          <div class="card-body">
+            <p><%= note.content %></p>
+          </div>
+          <div class="card-footer bg-light d-flex justify-content-end">
+            <form action="/users/<%= userId %>/notes/delete/<%= note.noteId %>" method="POST">
+              <button class="btn btn-outline-danger btn-sm">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    </div>
+
+  </div>
+</body>
+<br/><br/><br/><br/>

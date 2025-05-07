@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate_Jh') -%>  
+<body style="background: url('/css/imgs/BBACK.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; padding-top: 3rem;">
+ 
+    <br/><br/>
+  <div class="container">
+    <br/>
+    <h1 class="mb-5 text-center text-white">Welcome, <%= user.uName %> 👋</h1>
+
+    <!-- Create New Trade Button -->
+    <div class="d-flex justify-content-end mb-4" >
+      <a href="/users/<%= user.uId %>/trades/new" class="btn btn-primary px-4">
+        + New Trade
+      </a>
+    </div>
+
+    <!-- Trade Cards Grid -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <% let i = 1; %>
+      <% for (let trade of trades) { %>
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0 rounded-4">
+            <div class="card-body">
+              <h5 class="card-title mb-3 text-primary">Trade #<%= i %></h5>
+
+              <div class="mb-2"><strong>Date:</strong> 
+                <%= new Date(trade.date).toLocaleDateString("en-GB", {
+                  day: '2-digit', month: 'short', year: 'numeric'
+                }) %>
+              </div>
+
+              <div class="mb-2"><strong>Stock:</strong> <%= trade.stock %></div>
+              <div class="mb-2"><strong>Qty:</strong> <%= trade.qty %></div>
+              <div class="mb-2"><strong>Entry:</strong> ₹<%= trade.enPrice %> at <%= trade.enTime %></div>
+              <div class="mb-2"><strong>Exit:</strong> ₹<%= trade.exPrice %> at <%= trade.exTime %></div>
+              <div class="mb-2"><strong>Direction:</strong> <%= trade.direction %></div>
+
+              <div class="mb-2">
+                <strong>P&L:</strong> 
+                <span class="<%= (trade.exPrice - trade.enPrice) * trade.qty >= 0 ? 'text-success' : 'text-danger' %>">
+                  ₹<%= ((trade.exPrice - trade.enPrice) * trade.qty).toFixed(2) %>
+                </span>
+              </div>
+
+              <details class="mt-3">
+                <summary class="text-muted">View More Details</summary>
+                <ul class="mt-2 small ps-3">
+                  <li><strong>Reason for Entry:</strong> <%= trade.enReason %></li>
+                  <li><strong>Reason for Exit:</strong> <%= trade.exReason %></li>
+                  <li><strong>Stoploss:</strong> <%= trade.stoploss %></li>
+                  <li><strong>Target:</strong> <%= trade.target %></li>
+                  <li><strong>Market:</strong> <%= trade.market %></li>
+                  <li><strong>Mistake:</strong> <%= trade.mistake %></li>
+                  <li><strong>Final Review:</strong> <%= trade.finalview %></li>
+                </ul>
+              </details>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between bg-white border-0">
+              <a href="/users/<%= trade.user_id %>/trades/<%= trade.tradeid %>" class="btn btn-sm btn-outline-primary">Edit</a>
+              <form method="POST" action="/users/<%= trade.user_id %>/trades/<%= trade.tradeid %>?_method=DELETE">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% i++; %>
+      <% } %>
+    </div>
+  </div>
+  <br/>
+</body>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/>
