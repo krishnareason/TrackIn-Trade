@@ -4,13 +4,13 @@
   <div class="container mt-5 pt-5">
     <div class="card shadow-lg p-4 mb-5 bg-white rounded">
       <h3 class="text-center mb-4">📈 Add a New Trade</h3>
-      <form method="POST" action="/users/<%= user.uId %>/trades" novalidate class="needs-validation">
+      <form method="POST" action="/users/<%= user.uid %>/trades" novalidate class="needs-validation">
 
         <!-- Row 1: User ID + Date -->
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="user_id" class="form-label">User ID</label>
-            <input type="number" id="user_id" name="user_id" class="form-control" value="<%= user.uId %>" readonly>
+            <input type="number" id="user_id" name="user_id" class="form-control" value="<%= user.uid %>" readonly>
           </div>
           <div class="col-md-6">
             <label for="date" class="form-label">Date</label>
@@ -78,7 +78,6 @@
             <label for="pro_los" class="form-label">Profit/Loss</label>
             <input type="number" id="pro_los" name="pro_los" class="form-control" readonly>
             <div class="valid-feedback">Looks good!</div>
-    
           </div>
         </div>
 
@@ -109,13 +108,13 @@
           <label for="exReason" class="form-label">Reason for Exit</label>
           <textarea id="exReason" name="exReason" class="form-control" maxlength="200" rows="2" required></textarea>
           <div class="valid-feedback">Looks good!</div>
-            <div class="invalid-feedback">Enter valid Reasons!</div>
+          <div class="invalid-feedback">Enter valid Reasons!</div>
         </div>
         <div class="mb-3">
           <label for="market" class="form-label">Market Conditions</label>
           <textarea id="market" name="market" class="form-control" maxlength="200" rows="2" required></textarea>
           <div class="valid-feedback">Looks good!</div>
-            <div class="invalid-feedback">Enter valid Reasons!</div>
+          <div class="invalid-feedback">Enter valid Reasons!</div>
         </div>
         <div class="mb-3">
           <label for="mistake" class="form-label">Mistakes</label>
@@ -142,7 +141,7 @@
       let entryPrice = parseFloat(document.getElementById('enPrice').value) || 0;
       let exitPrice = parseFloat(document.getElementById('exPrice').value) || 0;
       let quantity = parseFloat(document.getElementById('qty').value) || 0;
-      document.getElementById('pro_los').value = (exitPrice-entryPrice) * quantity;
+      document.getElementById('pro_los').value = (exitPrice - entryPrice) * quantity;
     }
   </script>
 </body>

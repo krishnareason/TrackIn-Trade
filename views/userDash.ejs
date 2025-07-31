@@ -6,7 +6,7 @@
   <div class="container py-5">
     <!-- Welcome Message -->
     <div class="text-center text-white mb-5">
-      <h1 class="fw-bold">Welcome, <%= user.uName %> 👋</h1>
+      <h1 class="fw-bold">Welcome, <%= user.uname %> 👋</h1>
       <p class="text">Here’s a quick summary of your portfolio</p>
     </div>
 
@@ -18,13 +18,13 @@
             <h4 class="card-title text-center mb-4">📊 Portfolio Summary</h4>
             <ul class="list-group list-group-flush">
               <li class="list-group-item d-flex justify-content-between">
-                <strong>Total P&L:</strong> <span><%= user.totalPL %></span>
+                <strong>Total P&L:</strong> <span><%= user.totalpl %></span>
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <strong>Profitable Trades:</strong> <span><%= user.pTrade %></span>
+                <strong>Profitable Trades:</strong> <span><%= user.ptrade %></span>
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <strong>Losing Trades:</strong> <span><%= user.lTrade %></span>
+                <strong>Losing Trades:</strong> <span><%= user.ltrade %></span>
               </li>
             </ul>
           </div>
@@ -36,13 +36,13 @@
     <div class="text-center">
       <h4 class="text-white mb-4">🔍 Quick Actions</h4>
       <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
-        <a href="/users/<%= user.uId %>/trades" class="btn btn-outline-light px-4 py-2">
+        <a href="/users/<%= user.uid %>/trades" class="btn btn-outline-light px-4 py-2">
           📘 Go to Journal
         </a>
-        <a href="/users/<%= user.uId %>/ai/insights" class="btn btn-outline-light px-4 py-2">
+        <a href="/users/<%= user.uid %>/ai/insights" class="btn btn-outline-light px-4 py-2">
           💡 AI Insights
         </a>
-        <a href="/users/<%= user.uId %>/notes" class="btn btn-outline-light px-4 py-2">
+        <a href="/users/<%= user.uid %>/notes" class="btn btn-outline-light px-4 py-2">
           📝 Go to Notes
         </a>
       </div>

@@ -15,7 +15,6 @@ const db = require('./db');
 const bcrypt = require("bcryptjs");
 const ExpressError = require("./utils/ExpressError.js");
 const middleware = require('./middleware');
-//const User = require("./models/userModel.js");
 
 // Route files
 const userRoutes = require('./routes/users');
@@ -24,11 +23,18 @@ const notesRouter = require('./routes/notes');
 const aiRoutes = require("./routes/ai");
 const { router: authRoutes, isLoggedIn } = require("./routes/auth");
 
-
+// ✅ Neon DB connection test
+(async () => {
+  try {
+    const result = await db.query('SELECT NOW()');
+    console.log('✅ Connected to Neon DB at:', result.rows[0].now);
+  } catch (error) {
+    console.error('❌ DB Connection Error:', error);
+  }
+})();
 
 // Passport config
 require("./config/passport")(passport);
-
 
 // View engine and Middleware
 app.engine('ejs', ejsMate);
@@ -40,17 +46,15 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
-
-// Session & Flash config (use environment variable for secret in production)
+// Session & Flash config
 const sessionOptions = {
-    secret: "mysupersecretcode",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-       // expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true
-    }
+  secret: "mysupersecretcode",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true
+  }
 };
 app.use(session(sessionOptions));
 app.use(flash());
@@ -63,19 +67,16 @@ app.use(middleware.setCurrentUser);
 
 // Flash & user data middleware
 app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currentUser = req.user || null;
-    next();
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user || null;
+  next();
 });
 
 // Routes
 app.get("/", (req, res) => res.redirect("/home"));
 app.get("/home", (req, res) => res.render("frontpage.ejs"));
 app.get("/docs", (req, res) => res.render("docs.ejs"));
-// app.get("/aiInsights", (req, res) => res.redirect("aiInsights.ejs"));
-
-
 
 app.use("/", authRoutes);
 app.use('/users', userRoutes);
@@ -83,22 +84,47 @@ app.use('/users/:user_id/trades', tradeRoutes);
 app.use('/users/:user_id/notes', notesRouter);
 app.use('/users/:user_id/ai', aiRoutes);
 
-app.get('/dashboard', isLoggedIn, (req, res) => {
-    res.render('userDash', { user: req.user });
+app.get('/dashboard', isLoggedIn, async (req, res, next) => {
+  try {
+    const result = await db.query(`
+      SELECT 
+        uid AS "uid",
+        uname AS "uname",
+        uemail AS "uemail",
+        upass AS "upass",
+        unote AS "unote",
+        totalpl AS "totalpl",
+        ptrade AS "ptrade",
+        ltrade AS "ltrade"
+      FROM ogusers
+      WHERE uid = $1
+    `, [req.user.uId]);
+
+    const updatedUser = result.rows[0];
+    if (!updatedUser) {
+      req.flash("error", "User not found");
+      return res.redirect("/login");
+    }
+
+    res.render("userDash", { user: updatedUser });
+  } catch (err) {
+    next(err);
+  }
 });
+
 
 // 404 Handler
 app.all("*", (req, res, next) => {
-    next(new ExpressError(404, "Page Not Found"));
+  next(new ExpressError(404, "Page Not Found"));
 });
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-    const { statusCode = 500, message = "Something went wrong" } = err;
-    res.status(statusCode).render("error.ejs", { errorMsg: message, stack: err.stack });
+  const { statusCode = 500, message = "Something went wrong" } = err;
+  res.status(statusCode).render("error.ejs", { errorMsg: message, stack: err.stack });
 });
 
 // Start Server
 app.listen(3000, () => {
-    console.log("✅ Server is running on http://localhost:3000");
+  console.log("✅ Server is running on http://localhost:3000");
 });

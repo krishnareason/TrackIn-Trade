@@ -2,15 +2,22 @@
 <body style="background: url('/css/imgs/BBACK.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; padding-top: 3rem;">
   <br><br><br><br>
   <div class="container py-5">
+    <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="fw-bold text-white"><%= users.uName %>'s Notes</h2>
+      <h2 class="fw-bold text-white"><%= user.uname %>'s Notes</h2>
     </div>
 
-    <!-- Note Add Form -->
-    <div class="card mb-4 shadow-sm ">
-      <div class="card-header bg-primary text-white">
-        Add a New Note
-      </div>
+    <!-- Flash messages (optional) -->
+    <% if (success && success.length) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    <% if (error && error.length) { %>
+      <div class="alert alert-danger"><%= error %></div>
+    <% } %>
+
+    <!-- Add Note Form -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-primary text-white">Add a New Note</div>
       <div class="card-body">
         <form action="/users/<%= userId %>/notes/add" method="POST">
           <div class="mb-3">
@@ -26,29 +33,32 @@
       </div>
     </div>
 
-    <h3 class="fw-bold text-white">All Notes!!</h3>
+    <!-- Notes Section -->
+    <h3 class="fw-bold text-white">🗒️ Your Notes</h3>
 
-    <!-- Notes Display -->
     <div class="row">
-      <% notes.forEach(note => { %>
-        <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card h-100 shadow-sm">
-            <div class="card-header text-white bg-secondary">
-              <h5 class="mb-0"><%= note.title %></h5>
-            </div>
-            <div class="card-body">
-              <p><%= note.content %></p>
-            </div>
-            <div class="card-footer bg-light d-flex justify-content-end">
-              <form action="/users/<%= userId %>/notes/delete/<%= note.noteId %>" method="POST">
-                <button class="btn btn-outline-danger btn-sm">Delete</button>
-              </form>
+      <% if (notes.length === 0) { %>
+        <div class="col-12 text-white">No notes available. Start by adding one above.</div>
+      <% } else { %>
+        <% notes.forEach(note => { %>
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-header text-white bg-secondary">
+                <h5 class="mb-0"><%= note.title %></h5>
+              </div>
+              <div class="card-body">
+                <p><%= note.content %></p>
+              </div>
+              <div class="card-footer bg-light d-flex justify-content-end">
+                <form action="/users/<%= userId %>/notes/delete/<%= note.noteId %>" method="POST">
+                  <button class="btn btn-outline-danger btn-sm">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-      <% }) %>
+        <% }) %>
+      <% } %>
     </div>
-
   </div>
 </body>
 <br/><br/><br/><br/>

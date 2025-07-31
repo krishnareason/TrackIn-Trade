@@ -1,14 +1,14 @@
 <% layout('layouts/boilerplate_Jh') -%>  
 <body style="background: url('/css/imgs/BBACK.jpg') no-repeat center center fixed; background-size: cover; min-height: 100vh; padding-top: 3rem;">
 
-    <br/><br/>
+  <br/><br/>
   <div class="container">
     <br/>
-    <h1 class="mb-5 text-center text-white">Welcome, <%= user.uName %> 👋</h1>
+    <h1 class="mb-5 text-center text-white">Welcome, <%= user.uname %> 👋</h1>
 
     <!-- Create New Trade Button -->
-    <div class="d-flex justify-content-end mb-4" >
-      <a href="/users/<%= user.uId %>/trades/new" class="btn btn-primary px-4">
+    <div class="d-flex justify-content-end mb-4">
+      <a href="/users/<%= user.uid %>/trades/new" class="btn btn-primary px-4">
         + New Trade
       </a>
     </div>
@@ -30,22 +30,22 @@
 
               <div class="mb-2"><strong>Stock:</strong> <%= trade.stock %></div>
               <div class="mb-2"><strong>Qty:</strong> <%= trade.qty %></div>
-              <div class="mb-2"><strong>Entry:</strong> ₹<%= trade.enPrice %> at <%= trade.enTime %></div>
-              <div class="mb-2"><strong>Exit:</strong> ₹<%= trade.exPrice %> at <%= trade.exTime %></div>
+              <div class="mb-2"><strong>Entry:</strong> ₹<%= trade.enprice %> at <%= trade.entime %></div>
+              <div class="mb-2"><strong>Exit:</strong> ₹<%= trade.exprice %> at <%= trade.extime %></div>
               <div class="mb-2"><strong>Direction:</strong> <%= trade.direction %></div>
 
               <div class="mb-2">
                 <strong>P&L:</strong> 
-                <span class="<%= (trade.exPrice - trade.enPrice) * trade.qty >= 0 ? 'text-success' : 'text-danger' %>">
-                  ₹<%= ((trade.exPrice - trade.enPrice) * trade.qty).toFixed(2) %>
+                <span class="<%= (trade.exprice - trade.enprice) * trade.qty >= 0 ? 'text-success' : 'text-danger' %>">
+                  ₹<%= ((trade.exprice - trade.enprice) * trade.qty).toFixed(2) %>
                 </span>
               </div>
 
               <details class="mt-3">
                 <summary class="text-muted">View More Details</summary>
                 <ul class="mt-2 small ps-3">
-                  <li><strong>Reason for Entry:</strong> <%= trade.enReason %></li>
-                  <li><strong>Reason for Exit:</strong> <%= trade.exReason %></li>
+                  <li><strong>Reason for Entry:</strong> <%= trade.enreason %></li>
+                  <li><strong>Reason for Exit:</strong> <%= trade.exreason %></li>
                   <li><strong>Stoploss:</strong> <%= trade.stoploss %></li>
                   <li><strong>Target:</strong> <%= trade.target %></li>
                   <li><strong>Market:</strong> <%= trade.market %></li>

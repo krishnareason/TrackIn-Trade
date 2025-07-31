@@ -1,42 +1,43 @@
 <% layout('layouts/boilerplate_signup') -%>
+
 <body style="margin: 0; padding: 0; background: url('/css/imgs/BBACK.jpg') no-repeat center center fixed; background-size: cover;">
-  <div class="container d-flex justify-content-center align-items-center min-vh-100 ">
-    <div class="card shadow p-4" style="width: 100%; max-width: 400px; border-radius: 12px;">
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px; border-radius: 12px; position: relative; z-index: 2; background: white;">
+      
       <h1 class="text-center mb-4 fw-bold">
         <span style="
           background: linear-gradient(90deg, #27a4fd, #3dc0fd, #9a2efd, #b121ef);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           display: inline-block;
-          padding: 10px 0;
           font-weight: bold;
         ">
           Create Your Account
         </span>
       </h1>
-      
+
       <form action="/signup" method="POST">
         <div class="mb-3">
           <label for="uName" class="form-label">Username</label>
           <input type="text" id="uName" name="uName" class="form-control" placeholder="Enter username" required />
         </div>
+
         <div class="mb-3">
           <label for="uEmail" class="form-label">Email</label>
           <input type="email" id="uEmail" name="uEmail" class="form-control" placeholder="Enter email" required />
         </div>
+
         <div class="mb-3">
           <label for="uPass" class="form-label">Password</label>
           <input type="password" id="uPass" name="uPass" class="form-control" placeholder="Enter password" required />
         </div>
+
         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
       </form>
+
       <div class="text-center mt-3">
         <a href="/login" class="text-decoration-none">Already have an account? Login</a>
       </div>
-    </div> 
+    </div>
   </div>
 </body>
-</html>
-
-
-
